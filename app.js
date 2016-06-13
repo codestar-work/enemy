@@ -8,6 +8,7 @@ var mongo   = require('mongodb').MongoClient
 app.use(express.static('public'))
 app.engine('html', require('ejs').renderFile)
 app.get('/', home)
+app.get('/login', showLogin)
 app.get ('/register', register)
 app.post('/register', upload.array(), registerNewUser)
 app.listen(8000)
@@ -45,4 +46,8 @@ function registerNewUser(req, res) {
 function encode(password) {
 	return crypto.createHmac('sha512', password)
 			.update('I miss you').digest('hex')
+}
+
+function showLogin(req, res) {
+	res.render('login.html')
 }
