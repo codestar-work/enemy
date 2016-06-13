@@ -8,7 +8,8 @@ var mongo   = require('mongodb').MongoClient
 app.use(express.static('public'))
 app.engine('html', require('ejs').renderFile)
 app.get('/', home)
-app.get('/login', showLogin)
+app.get ('/login', showLogin)
+app.post('/login', upload.array(), checkLogin)
 app.get ('/register', register)
 app.post('/register', upload.array(), registerNewUser)
 app.listen(8000)
@@ -50,4 +51,24 @@ function encode(password) {
 
 function showLogin(req, res) {
 	res.render('login.html')
+}
+
+function checkLogin(req, res) {
+	var e = req.body.email
+	var p = encode(req.body.password)
+
+	mongo.connect('mongodb://127.0.0.1/enemy',
+		(error, db) => {
+			db.collection('user').find({email:e, password:p})
+			.toArray(
+				(error, data) => {
+					if (data.length == 0) {
+						res.redirect('/login?Incorrect Password')
+					} else {
+						res.redirect('/profile')
+					}
+				}
+			)
+		}
+	)
 }
