@@ -1,0 +1,32 @@
+<% include header.html %>
+
+<style>
+	form {
+		max-width: 240px;
+		margin: 0 auto;
+		margin-top: 20px;
+		padding: 10px;
+	}
+	input {
+		margin-bottom: 10px;
+	}
+</style>
+
+<form method='post'>
+	<input name='fullname'
+		placeholder='Full name'
+		class='form-control'>
+	<input name='email'
+		placeholder='Email'
+		class='form-control'>
+	<input name='password'
+		placeholder='Password'
+		type='password'
+		class='form-control'>
+	<button type='submit'
+		class='btn btn-primary'>
+		Register
+	</button>
+</form>
+
+<% include footer.html %>
