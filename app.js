@@ -3,6 +3,7 @@ var app     = express()
 var multer  = require('multer')
 var upload  = multer({dest: 'uploads/'})
 var crypto  = require('crypto')
+var mongo   = require('mongodb').MongoClient
 
 app.use(express.static('public'))
 app.engine('html', require('ejs').renderFile)
@@ -20,8 +21,25 @@ function register(req, res) {
 }
 
 function registerNewUser(req, res) {
-	console.log(req.body)
-	res.redirect('/')
+	var data = {}
+	data.fullname = req.body.fullname
+	data.email    = req.body.email
+	data.password = encode(req.body.password)
+	mongo.connect("mongodb://127.0.0.1/enemy",
+		(e, db) => {
+			db.collection('user').find({email: data.email})
+			.toArray(
+				(e, d) => {
+					if (d.length == 0) {
+						db.collection('user').insert(data)
+						res.redirect('/login')
+					} else {
+						res.redirect('/register?Duplicated')
+					}
+				}
+			)
+		}	
+	)
 }
 
 function encode(password) {
