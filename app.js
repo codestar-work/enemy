@@ -1,7 +1,8 @@
 var express = require('express')
-var app = express()
-var multer = require('multer')
-var upload = multer({dest: 'uploads/'})
+var app     = express()
+var multer  = require('multer')
+var upload  = multer({dest: 'uploads/'})
+var crypto  = require('crypto')
 
 app.use(express.static('public'))
 app.engine('html', require('ejs').renderFile)
@@ -21,4 +22,9 @@ function register(req, res) {
 function registerNewUser(req, res) {
 	console.log(req.body)
 	res.redirect('/')
+}
+
+function encode(password) {
+	return crypto.createHmac('sha512', password)
+			.update('I miss you').digest('hex')
 }
