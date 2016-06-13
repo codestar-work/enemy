@@ -95,7 +95,7 @@ function token(req, res, next) {
 		req.token = parseInt(Math.random() * 1000000000)
 					+ '-' +
 					parseInt(Math.random() * 1000000000)
-		res.set('Set-Cookie: token=' + req.token)
+		res.set('Set-Cookie', 'token=' + req.token)
 	}
 
 	next()
