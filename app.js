@@ -4,6 +4,7 @@ var multer  = require('multer')
 var upload  = multer({dest: 'uploads/'})
 var crypto  = require('crypto')
 var mongo   = require('mongodb').MongoClient
+var fs      = require('fs')
 
 app.use(token)
 app.use(express.static('public'))
@@ -14,6 +15,8 @@ app.post('/login', upload.array(), checkLogin)
 app.get ('/register', register)
 app.post('/register', upload.array(), registerNewUser)
 app.get ('/profile', showProfile)
+app.post('/save-photo', upload.single('photo'))
+app.post('/save-photo', savePhoto)
 app.listen(8000)
 
 function home(req, res) {
@@ -107,4 +110,16 @@ function showProfile(req, res) {
 	} else {
 		res.render('profile.html', {user: granted[req.token]})
 	}
+}
+
+function savePhoto(req, res) {
+	var data = req.file.originalname.split('.')
+	var ext  = data[data.length - 1]
+	if (ext == 'jpg' || ext == 'png' || ext == 'gif') {
+	} else {
+		ext = 'png'
+	}
+	fs.renameSync(req.file.path, req.file.path + '.' + ext)
+	
+	res.redirect('/profile')
 }
