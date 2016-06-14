@@ -12,6 +12,14 @@
             </span>
         </div>
     </form>
+
+    <table class='table'>
+        <thead>
+            <tr><th>Code</th><th>Name</th><th>Country</th></tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
 </div>
 
 <script>
@@ -20,7 +28,12 @@ function search() {
     .done(show)
 }
 function show(data) {
-    console.table(data)
+    $('tbody').html('')
+    for (var i = 0; i < data.length; i++) {
+        var row = '<tr><td>' + data[i].code + '</td><td>' +
+            data[i].name + '</td><td>' + data[i].country + '</td></tr>'
+        $('tbody').append(row)
+    }
 }
 </script>
 
