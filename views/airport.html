@@ -13,7 +13,7 @@
         </div>
     </form>
 
-    <table class='table'>
+    <table class='table' style='display:none'>
         <thead>
             <tr><th>Code</th><th>Name</th><th>Country</th></tr>
         </thead>
@@ -24,6 +24,7 @@
 
 <script>
 function search() {
+    $('table').fadeOut()
     $.get('/search?name=' + $('#query').val())
     .done(show)
 }
@@ -34,6 +35,7 @@ function show(data) {
             data[i].name + '</td><td>' + data[i].country + '</td></tr>'
         $('tbody').append(row)
     }
+    $('table').fadeIn()
 }
 </script>
 
