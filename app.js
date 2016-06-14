@@ -19,7 +19,12 @@ app.get ('/profile', showProfile)
 app.post('/save-photo', upload.single('photo'))
 app.post('/save-photo', savePhoto)
 app.get ('/logout', logout)
+app.get ('/airport', searchAirport)
 app.listen(8000)
+
+function searchAirport(req, res) {
+	res.render('airport.html')
+}
 
 function home(req, res) {
 	res.render('index.html')
