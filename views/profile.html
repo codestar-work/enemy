@@ -3,6 +3,8 @@
 <div class='container'>
     Hello <%= user.fullname %>
 
+    <img src='<%= user.photo %>' >
+
     <form action='/save-photo' 
         method='post' enctype="multipart/form-data">
         <input type='file' name='photo' 

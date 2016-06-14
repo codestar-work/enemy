@@ -8,6 +8,7 @@ var fs      = require('fs')
 
 app.use(token)
 app.use(express.static('public'))
+app.use(express.static('uploads'))
 app.engine('html', require('ejs').renderFile)
 app.get ('/', home)
 app.get ('/login', showLogin)
@@ -121,5 +122,14 @@ function savePhoto(req, res) {
 	}
 	fs.renameSync(req.file.path, req.file.path + '.' + ext)
 	
-	res.redirect('/profile')
+	var user = granted[req.token];
+	user.photo = req.file.filename + '.' + ext
+	mongo.connect('mongodb://127.0.0.1/enemy',
+		(error, db) => {
+			var x = {}
+			x._id = user._id
+			db.collection('user').update(x, user)
+			res.redirect('/profile')
+		}	
+	)
 }
