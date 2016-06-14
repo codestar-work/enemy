@@ -1,10 +1,16 @@
 <% include header.html %>
 
 <div class='container'>
+    <br>
     <form action='javascript:search()'>
-        <input id='query' placeholder='Airport Name'
-            class='form-control'>
-        <button type='submit'>Search</button>
+        <div class='input-group'>
+            <input id='query' placeholder='Airport Name'
+                class='form-control' autofocus>
+            <span class='input-group-btn'>
+                <button type='submit' 
+                    class='btn btn-primary'>Search</button>
+            </span>
+        </div>
     </form>
 </div>
 
