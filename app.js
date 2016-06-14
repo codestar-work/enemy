@@ -18,6 +18,7 @@ app.post('/register', upload.array(), registerNewUser)
 app.get ('/profile', showProfile)
 app.post('/save-photo', upload.single('photo'))
 app.post('/save-photo', savePhoto)
+app.get ('/logout', logout)
 app.listen(8000)
 
 function home(req, res) {
@@ -132,4 +133,9 @@ function savePhoto(req, res) {
 			res.redirect('/profile')
 		}	
 	)
+}
+
+function logout(req, res) {
+	delete granted[req.token]
+	res.render('logout.html')
 }
