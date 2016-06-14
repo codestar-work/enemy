@@ -1,4 +1,21 @@
 <% include header.html %>
 
+<div class='container'>
+    <form action='javascript:search()'>
+        <input id='query' placeholder='Airport Name'
+            class='form-control'>
+        <button type='submit'>Search</button>
+    </form>
+</div>
+
+<script>
+function search() {
+    $.get('/search?name=' + $('#query').val())
+    .done(show)
+}
+function show(data) {
+    console.table(data)
+}
+</script>
 
 <% include footer.html %>

@@ -20,10 +20,21 @@ app.post('/save-photo', upload.single('photo'))
 app.post('/save-photo', savePhoto)
 app.get ('/logout', logout)
 app.get ('/airport', searchAirport)
+app.get ('/search', search)
 app.listen(8000)
 
 function searchAirport(req, res) {
 	res.render('airport.html')
+}
+
+function search(req, res) {
+    var pattern = new RegExp(req.query.name, "i")
+    mongo.connect("mongodb://127.0.0.1/airport", 
+        (error, db) => db.collection('airport')
+        .find({name: pattern}).toArray(
+            (error, data) => res.send(data)
+        )
+    )
 }
 
 function home(req, res) {
